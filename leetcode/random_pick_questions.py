@@ -40,6 +40,36 @@ class Solution:
                 total += math.ceil(c / (i + 1)) * (i + 1)
             return total
 
+'''
+1184. Distance Between Bus Stops
+A bus has n stops numbered from 0 to n - 1 that form a circle. We know the distance between all pairs of neighboring stops where distance[i] is the distance between the stops number i and (i + 1) % n.
+
+The bus goes along both directions i.e. clockwise and counterclockwise.
+
+Return the shortest distance between the given start and destination stops.
+
+e.x.
+Input: distance = [1,2,3,4], start = 0, destination = 1
+Output: 1
+Explanation: Distance between 0 and 1 is 1 or 9, minimum is 1.
+
+'''
+class Solution1184:
+    def shortestDist(self, l, start, end):
+        if start == end:
+            return 0
+        elif start > end:
+            return min(sum(l[end:start]), (sum(l[0:end]) + sum(l[start:])))
+        else:
+            return min(sum(l[start:end]), (sum(l[0:start]) + sum(l[end:])))
+
+    def betterAnother(self, l, start, end):
+        a = min(start, end)
+        b = max(start, end)
+        return min(sum(l[a:b]), sum(l) - sum(l[a:b]))
+
+
+
 if __name__ == '__main__':
-    s = Solution()
-    print(s.numRabbits([4,0,0,2,4]))
+    s = Solution1184()
+    print(s.betterAnother([1,2,3,4], 0, 2))
