@@ -68,8 +68,130 @@ class Solution1184:
         b = max(start, end)
         return min(sum(l[a:b]), sum(l) - sum(l[a:b]))
 
+'''
+60. Permutation Sequence
+The set [1,2,3,...,n] contains a total of n! unique permutations.
+
+By listing and labeling all of the permutations in order, we get the following sequence for n = 3:
+
+"123"
+"132"
+"213"
+"231"
+"312"
+"321"
+Given n and k, return the kth permutation sequence.
+
+Note:
+
+Given n will be between 1 and 9 inclusive.
+Given k will be between 1 and n! inclusive.
+Example 1:
+
+Input: n = 3, k = 3
+Output: "213"
+Example 2:
+
+Input: n = 4, k = 9
+Output: "2314"
+'''
+class Solution60:
+    def getPermutation(self, n: int, k: int) -> str:
+        l = list(range(1, n+1))
+        tmp = ''
+        # while len(tmp) <= n
+        for i in l:
+            tmp += i
+            ll = l.copy()
+            ll.remove(i)
+            for j in ll:
+                tmp += j
+
+
+    def perm_generator(self, l:list):
+        if len(l) == 0:
+            print('\n')
+        else:
+            for i in l:
+                a = i
+                print(a)
+                tmp = l.copy()
+                tmp.remove(i)
+                self.perm_generator(tmp)
+
+    def permutations(self, arr, position, end):
+
+        if position == end:
+            print(arr)
+
+        else:
+            for index in range(position, end):
+                if index == position:
+                    print(index, position)
+                    print(True)
+                else:
+                    print(index, position)
+                    print(False)
+                arr[index], arr[position] = arr[position], arr[index]
+                self.permutations(arr, position + 1, end)
+                # 回溯, 继续执行递F(x)时未完成的语句
+                arr[position], arr[index] = arr[index], arr[position]
+
+
+"""全排列 用递归方法
+全排列：
+1、列表只有一个元素[a]，它的全排列只有a。
+2、列表有两个元素[a, b]，它的全排列为[a, b], [b, a]：
+    { 将第一个元素a固定，对b进行全排列得到[a, b]。
+    将第一个元素与第二个元素交换得到[b, a]。
+    将b固定，对a进行全排列，得到[b, a] }
+3、列表有三个元素[a, b, c]
+    { 将a固定，对bc进行全排列{ 将b固定，对c全排列[abc]。交换bc，将c固定对b进行全排列[acb] }
+     交换ab，[b, a, c] 对ac进行全排列{ ... }
+     ... ...}
+4、列表有n个元素，将第一个元素固定，对剩下n - 1个元素进行全排列。
+    将第一个元素依此与其他元素交换，对每次交换后剩下的n-1个元素进行全排列。
+5、对剩下的n - 1个元素全排列，同上，固定后对n - 2排列。
+6、直到数组数量为1，全排列就是它自己，完成一次排列。
+j = begin
+for i in range(begin, end):  # 对begin到end的数组进行i次交换。
+    data[i], data[j] = data[j], data[i]  # 交换。
+    perm(data, begin + 1, end)  # 交换后对剩下数组进行全排列。[begin + 1, end]
+    data[i], data[j] = data[j], data[i]  # 全排列完成后，换回原来的顺序，回到for进行下一次交换。
+    """
+
+
+def perm(data, begin, end):
+    if begin == end:  # 递归结束条件，当交换到最后一个元素的时候不需要交换，1的全排列还是1。
+        print(data)  # 打印一次排列完成后的数组。
+    else:
+        j = begin
+        for i in range(begin, end):  # 从begin到end全排列。
+            data[i], data[j] = data[j], data[i]
+            perm(data, begin + 1, end)
+            data[i], data[j] = data[j], data[i]  # 递归完成后，交换回原来的位置。
+
+
+arr = [1, 2, 3, 4, 5]
+perm(arr, 0, len(arr))
+
+
+
+
 
 
 if __name__ == '__main__':
-    s = Solution1184()
-    print(s.betterAnother([1,2,3,4], 0, 2))
+    # s = Solution1184()
+    # print(s.betterAnother([1,2,3,4], 0, 2))
+
+    s = Solution60()
+    print(s.permutations([1,2,3,4], 0, 4))
+
+
+
+
+
+
+
+
+
