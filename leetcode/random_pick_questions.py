@@ -96,28 +96,6 @@ Input: n = 4, k = 9
 Output: "2314"
 '''
 class Solution60:
-    def getPermutation(self, n: int, k: int) -> str:
-        l = list(range(1, n+1))
-        tmp = ''
-        # while len(tmp) <= n
-        for i in l:
-            tmp += i
-            ll = l.copy()
-            ll.remove(i)
-            for j in ll:
-                tmp += j
-
-
-    def perm_generator(self, l:list):
-        if len(l) == 0:
-            print('\n')
-        else:
-            for i in l:
-                a = i
-                print(a)
-                tmp = l.copy()
-                tmp.remove(i)
-                self.perm_generator(tmp)
 
     def permutations(self, arr, position, end):
 
@@ -171,10 +149,32 @@ def perm(data, begin, end):
             perm(data, begin + 1, end)
             data[i], data[j] = data[j], data[i]  # 递归完成后，交换回原来的位置。
 
+#
+# arr = [1, 2, 3, 4, 5]
+# perm(arr, 0, len(arr))
 
-arr = [1, 2, 3, 4, 5]
-perm(arr, 0, len(arr))
 
+class Solution_perm:
+    # 应该可以用回溯法
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        # 定义保存最后结果的列表集合
+        final_answer = []
+        nums_length = len(nums)
+
+        def back(answer=[]):
+            # 如果临时结果集中的元素和给定数组nums长度相等，说明拿到了结果
+            if len(answer) == nums_length:
+                final_answer.append(answer)
+                return
+            for index in nums:
+                if index not in answer:
+                    back(answer+[index])
+        back()
+        return final_answer
 
 
 
@@ -184,8 +184,11 @@ if __name__ == '__main__':
     # s = Solution1184()
     # print(s.betterAnother([1,2,3,4], 0, 2))
 
-    s = Solution60()
-    print(s.permutations([1,2,3,4], 0, 4))
+    # s = Solution60()
+    # s.perm_generator([1,2,3,4], [])
+
+    s = Solution_perm()
+    print(s.permute([1, 2, 3]))
 
 
 
